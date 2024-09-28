@@ -25,23 +25,24 @@ class LegalHelp extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding:  EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'For detailed information on legal matters, visit the Bangladesh High Court website:https://www.supremecourt.gov.bd/web/indexn.php?page=officers_main.php&menu=11&div_id=2&lang=',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _launchURL,
-                child: Text('Go to Bangladesh High Court'),
                 style: TextButton.styleFrom(
-                   // Text color
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  // Text color
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 ),
+                child: const Text('Go to Bangladesh High Court'),
               ),
             ],
           ),

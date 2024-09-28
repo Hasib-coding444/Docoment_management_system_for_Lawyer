@@ -21,7 +21,8 @@ class _NoteState extends State<Note> {
 
   Future<void> _fetchNote() async {
     // Fetch the note from Firestore
-    DocumentSnapshot snapshot = await _firestore.collection('notes').doc('noteDoc').get();
+    DocumentSnapshot snapshot =
+        await _firestore.collection('notes').doc('noteDoc').get();
     if (snapshot.exists) {
       setState(() {
         _noteContent = snapshot['content'] ?? '';
@@ -57,7 +58,7 @@ class _NoteState extends State<Note> {
               child: TextField(
                 controller: _noteController,
                 maxLines: null, // Allows unlimited lines
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Write your note here...',
                 ),
@@ -68,10 +69,10 @@ class _NoteState extends State<Note> {
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _saveNote,
-              child: Text('Save Note'),
+              child: const Text('Save Note'),
             ),
           ],
         ),

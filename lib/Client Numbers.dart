@@ -25,7 +25,8 @@ class _ClientNumbersState extends State<ClientNumbers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Client Numbers", style: TextStyle(color: Colors.white)),
+        title:
+            const Text("Client Numbers", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
@@ -33,11 +34,11 @@ class _ClientNumbersState extends State<ClientNumbers> {
         child: Column(
           children: [
             _buildClientNameField(),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildClientNumberField(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildSaveButton(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Wrap StreamBuilder inside Expanded widget
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
@@ -47,13 +48,13 @@ class _ClientNumbersState extends State<ClientNumbers> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasError) {
-                    return Center(child: Text('Something went wrong!'));
+                    return const Center(child: Text('Something went wrong!'));
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No clients found.'));
+                    return const Center(child: Text('No clients found.'));
                   }
 
                   final clientsData = snapshot.data!.docs;
@@ -61,7 +62,8 @@ class _ClientNumbersState extends State<ClientNumbers> {
                   return ListView.builder(
                     itemCount: clientsData.length,
                     itemBuilder: (context, index) {
-                      var clientData = clientsData[index].data() as Map<String, dynamic>;
+                      var clientData =
+                          clientsData[index].data() as Map<String, dynamic>;
                       String docId = clientsData[index].id;
 
                       return ListTile(
@@ -70,14 +72,14 @@ class _ClientNumbersState extends State<ClientNumbers> {
                           onTap: () => _launchCaller(clientData['number']),
                           child: Text(
                             clientData['number'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
                         trailing: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () async {
                             // Handle client deletion
                             await FirebaseFirestore.instance
@@ -101,7 +103,7 @@ class _ClientNumbersState extends State<ClientNumbers> {
   Widget _buildClientNameField() {
     return TextField(
       controller: _clientNameController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Client Name',
         border: OutlineInputBorder(),
       ),
@@ -111,7 +113,7 @@ class _ClientNumbersState extends State<ClientNumbers> {
   Widget _buildClientNumberField() {
     return TextField(
       controller: _clientNumberController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Client Number',
         border: OutlineInputBorder(),
       ),
@@ -122,7 +124,7 @@ class _ClientNumbersState extends State<ClientNumbers> {
   Widget _buildSaveButton() {
     return ElevatedButton(
       onPressed: _saveClient,
-      child: Text('Save'),
+      child: const Text('Save'),
     );
   }
 
@@ -152,7 +154,7 @@ class _ClientNumbersState extends State<ClientNumbers> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }

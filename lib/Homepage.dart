@@ -28,7 +28,7 @@ class _homepageState extends State<homepage> {
     super.initState();
     _timeString = _formatDateTime(DateTime.now());
     _dateString = _formatDate(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
   }
 
   void _getTime() {
@@ -48,11 +48,13 @@ class _homepageState extends State<homepage> {
   String _formatDate(DateTime dateTime) {
     return DateFormat('dd-MM-yyyy').format(dateTime); // Format: day-month-year
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lawyer Dairy", style: TextStyle(color: Colors.white)),
+        title:
+            const Text("Lawyer Dairy", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
         titleSpacing: 0,
         centerTitle: true,
@@ -64,11 +66,11 @@ class _homepageState extends State<homepage> {
               children: [
                 Text(
                   _dateString,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
                 Text(
                   _timeString,
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ],
             ),
@@ -87,14 +89,14 @@ class _homepageState extends State<homepage> {
           padding: const EdgeInsets.all(0),
           children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.blue,
               ),
               child: FutureBuilder<User?>(
                 future: _getUser(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (snapshot.hasData) {
@@ -105,23 +107,28 @@ class _homepageState extends State<homepage> {
                         CircleAvatar(
                           radius: 30,
                           backgroundImage: NetworkImage(
-                            user.photoURL ?? 'https://www.pngwing.com/en/search?q=user',
+                            user.photoURL ??
+                                'https://www.pngwing.com/en/search?q=user',
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           user.displayName ?? 'User Name',
-                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           user.email ?? 'user.email@example.com',
-                          style: TextStyle(color: Colors.white, fontSize: 10),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
                         ),
                       ],
                     );
                   } else {
-                    return Center(child: Text('Error loading user data'));
+                    return const Center(child: Text('Error loading user data'));
                   }
                 },
               ),
@@ -130,7 +137,10 @@ class _homepageState extends State<homepage> {
               leading: const Icon(Icons.search_rounded, size: 24.0),
               title: const Text('Search', style: TextStyle(fontSize: 15.0)),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>AllCasesPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AllCasesPage()));
               },
             ),
             const SizedBox(height: 20),
@@ -138,15 +148,22 @@ class _homepageState extends State<homepage> {
               leading: const Icon(Icons.notes, size: 24.0),
               title: const Text('my Cases', style: TextStyle(fontSize: 15.0)),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AllCasesPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AllCasesPage()));
               },
             ),
             const SizedBox(height: 20),
             ListTile(
               leading: const Icon(Icons.contact_page, size: 24.0),
-              title: const Text('Client Numbers', style: TextStyle(fontSize: 15.0)),
+              title: const Text('Client Numbers',
+                  style: TextStyle(fontSize: 15.0)),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientNumbers()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ClientNumbers()));
               },
             ),
             const SizedBox(height: 20),
@@ -154,7 +171,8 @@ class _homepageState extends State<homepage> {
               leading: const Icon(Icons.settings, size: 24.0),
               title: const Text('Settings', style: TextStyle(fontSize: 15.0)),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => S()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const S()));
               },
             ),
             const SizedBox(height: 20),
@@ -198,7 +216,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -209,7 +227,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CaseForm()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CaseForm()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -234,7 +255,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -245,7 +266,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AppellCaseForm()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AppellCaseForm()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -259,10 +283,11 @@ class _homepageState extends State<homepage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
-              SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -277,7 +302,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -288,7 +313,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  HighCaseForm()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HighCaseForm()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -313,7 +341,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -324,7 +352,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ActiveCase()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ActiveCase()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -340,12 +371,10 @@ class _homepageState extends State<homepage> {
                   ),
                 ],
               ),
-
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-
                   Container(
                     height: 170,
                     width: 170,
@@ -357,7 +386,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -368,7 +397,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const DismissCase()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DismissCase()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -393,7 +425,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -404,7 +436,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AllCasesPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AllCasesPage()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -420,7 +455,9 @@ class _homepageState extends State<homepage> {
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -435,7 +472,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -446,7 +483,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LegalHelp()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LegalHelp()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -460,7 +500,6 @@ class _homepageState extends State<homepage> {
                       ),
                     ),
                   ),
-
                   Container(
                     height: 170,
                     width: 170,
@@ -472,7 +511,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -483,7 +522,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientNumbers()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ClientNumbers()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -499,7 +541,7 @@ class _homepageState extends State<homepage> {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -514,7 +556,7 @@ class _homepageState extends State<homepage> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       gradient: const LinearGradient(
@@ -525,7 +567,10 @@ class _homepageState extends State<homepage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Note()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Note()));
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -547,18 +592,15 @@ class _homepageState extends State<homepage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>AllCasesPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AllCasesPage()));
         },
-        child: Icon(Icons.search),
+        child: const Icon(Icons.search),
       ),
     );
   }
 
   Future<User?> _getUser() async {
     return FirebaseAuth.instance.currentUser;
-
-
   }
 }
-
-

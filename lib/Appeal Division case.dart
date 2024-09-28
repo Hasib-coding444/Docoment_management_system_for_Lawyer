@@ -5,12 +5,13 @@ import 'package:flutter_application_1/DateTimeForm.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:typed_data';
 import 'dart:io' as io;
 
 import 'All Cases.dart';
 
 class AppellCaseForm extends StatefulWidget {
+  const AppellCaseForm({super.key});
+
   @override
   _AppelCaseFormState createState() => _AppelCaseFormState();
 }
@@ -22,8 +23,8 @@ class _AppelCaseFormState extends State<AppellCaseForm> {
   final _partyNameController = TextEditingController();
   final _yearController = TextEditingController();
   final _nextDateController = TextEditingController();
-  List<Uint8List> _imageBytes = [];
-  List<XFile> _imageFiles = [];
+  final List<Uint8List> _imageBytes = [];
+  final List<XFile> _imageFiles = [];
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
@@ -41,13 +42,14 @@ class _AppelCaseFormState extends State<AppellCaseForm> {
     List<String> imageUrls = [];
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User not logged in')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('User not logged in')));
       return;
     }
     String uid = user.uid;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Saving document...'),
         duration: Duration(seconds: 1),
       ),
@@ -61,14 +63,21 @@ class _AppelCaseFormState extends State<AppellCaseForm> {
         if (kIsWeb) {
           await FirebaseStorage.instance.ref(imagePath).putData(imageData);
         } else {
-          await FirebaseStorage.instance.ref(imagePath).putFile(io.File(imageFile.path));
+          await FirebaseStorage.instance
+              .ref(imagePath)
+              .putFile(io.File(imageFile.path));
         }
 
-        String imageUrl = await FirebaseStorage.instance.ref(imagePath).getDownloadURL();
+        String imageUrl =
+            await FirebaseStorage.instance.ref(imagePath).getDownloadURL();
         imageUrls.add(imageUrl);
       }
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).collection('cases').add({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('cases')
+          .add({
         'caseNo': _caseNoController.text,
         'regDate': _regDateController.text,
         'courtName': _courtNameController.text,
@@ -78,83 +87,98 @@ class _AppelCaseFormState extends State<AppellCaseForm> {
         'imageUrls': imageUrls,
       });
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AllCasesPage()),
+        MaterialPageRoute(builder: (context) => const AllCasesPage()),
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('New Case'),backgroundColor: Colors.blue,),
+      appBar: AppBar(
+        title: const Text('New Case'),
+        backgroundColor: Colors.blue,
+      ),
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: Column(
           children: [
             TextField(
               controller: _caseNoController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Case No'),
+              decoration: const InputDecoration(labelText: 'Case No'),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             DateTimeFormField(
               controller: _regDateController,
               label: 'Registration Date',
             ),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: _courtNameController,
-              decoration: InputDecoration(labelText: 'Court Name'),
+              decoration: const InputDecoration(labelText: 'Court Name'),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: _partyNameController,
-              decoration: InputDecoration(labelText: 'Name of Party'),
+              decoration: const InputDecoration(labelText: 'Name of Party'),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: _yearController,
-              decoration: InputDecoration(labelText: 'Year'),
+              decoration: const InputDecoration(labelText: 'Year'),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             DateTimeFormField(
               controller: _nextDateController,
               label: 'Next Date',
             ),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             IconButton(
-              icon: Icon(Icons.camera_alt),
+              icon: const Icon(Icons.camera_alt),
               onPressed: _pickImage,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _imageBytes.isEmpty
-                ? Text('No pictures added')
+                ? const Text('No pictures added')
                 : Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                ),
-                itemCount: _imageBytes.length,
-                itemBuilder: (context, index) {
-                  return Image.memory(
-                    _imageBytes[index],
-                    fit: BoxFit.cover,
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 15),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 4.0,
+                        mainAxisSpacing: 4.0,
+                      ),
+                      itemCount: _imageBytes.length,
+                      itemBuilder: (context, index) {
+                        return Image.memory(
+                          _imageBytes[index],
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ),
+            const SizedBox(height: 15),
             ElevatedButton(
               onPressed: _saveData,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
